@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard – MinhaFinanças{% endblock %}
+
+{% block content %}
+
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+<div class="container">
+
+
+  <div class="cards">
+    <div class="card bg-roxo">
+      <h2>Receitas Totais</h2>
+      <p>R$ {{ total_receitas|floatformat:2 }}</p>
+    </div>
+    <div class="card bg-vermelho">
+      <h2>Despesas Totais</h2>
+      <p>R$ {{ total_despesas|floatformat:2 }}</p>
+    </div>
+    <div class="card bg-amarelo">
+      <h2>Receita Bruta</h2>
+      <p>R$ {{ resultado|floatformat:2 }}</p>
+    </div>
+    <div class="card bg-verde">
+      <h2>Total em Caixa</h2>
+      <p>R$ {{ caixa|default:"0.00"|floatformat:2 }}</p>
+    </div>
+  </div>
+
+
+  <div class="grafico-box">
+    <h2>Desempenho Mensal</h2>
+    <canvas id="lineChart"></canvas>
+  </div>
+
+
+  {{ meses|json_script:"meses-data" }}
+  {{ valores|json_script:"valores-data" }}
+  {{ valores_despesas|json_script:"valores-despesas" }}
+  {{ valores_resultado|json_script:"valores-resultado" }}
+
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const meses = JSON.parse(document.getElementById('meses-data').textContent);
+  const valores = JSON.parse(document.getElementById('valores-data').textContent);
+  const valores_despesas = JSON.parse(document.getElementById('valores-despesas').textContent);
+  const valores_resultado = JSON.parse(document.getElementById('valores-resultado').textContent);
+
+  new Chart(document.getElementById('lineChart'), {
+    type: 'line',
+    data: {
+      labels: meses,
+      datasets: [
+        {
+          label: 'Receita Mensal',
+          data: valores,
+          borderColor: 'orange',
+          borderWidth: 2,
+          tension: 0.3
+        },
+        {
+          label: 'Despesa Mensal',
+          data: valores_despesas,
+          borderColor: 'red',
+          borderWidth: 2,
+          tension: 0.3
+        },
+        {
+          label: 'Resultado (Lucro)',
+          data: valores_resultado,
+          borderColor: 'green',
+          borderDash: [5, 5],
+          borderWidth: 2,
+          tension: 0.3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: '#e0e0e0' 
+          }
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}
