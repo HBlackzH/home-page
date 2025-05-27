@@ -1,4 +1,3 @@
-/* styles.css */
 
 * {
     box-sizing: border-box;
@@ -8,8 +7,8 @@
 }
 
 body {
-    background-color: #121212; /* Preto suave */
-    color: #e0e0e0; /* Cinza claro para texto */
+    background-color: #121212;
+    color: #e0e0e0;
     padding: 40px;
     display: flex;
     flex-direction: column;
@@ -20,16 +19,16 @@ body {
 h1 {
     margin-bottom: 20px;
     font-size: 2.5rem;
-    color: #ffffff; /* Verde neon para destaque */
+    color: #ffffff;
 }
 
 p {
     margin: 10px 0;
-    color: #bdbdbd; /* Cinza médio */
+    color: #bdbdbd;
 }
 
 a {
-    color: #ffffff; /* Verde neon para links */
+    color: #ffffff; 
     text-decoration: none;
     margin: 0 10px;
     font-weight: bold;
@@ -37,12 +36,12 @@ a {
 }
 
 a:hover {
-    color: #ffffff; /* Verde um pouco mais claro */
+    color: #ffffff;
     text-decoration: underline;
 }
 
 form {
-    background-color: #1e1e1e; /* Cinza escuro para fundo do formulário */
+    background-color: #1e1e1e;
     padding: 25px 35px;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
